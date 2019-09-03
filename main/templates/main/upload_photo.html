@@ -1,0 +1,25 @@
+{% extends 'main/index.html' %}
+
+
+{% block content %}
+    <h2>Upload photo</h2>
+    <form method="post" enctype="multipart/form-data" multiple>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload</button>
+    </form>
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large red btn-link" href="{% url 'main:single_slug' c_album.slug %}">
+            <i class="large material-icons">keyboard_backspace</i>
+        </a>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.fixed-action-btn');
+        var instances = M.FloatingActionButton.init(elems, {
+            direction: 'left',
+            hoverEnabled: false
+            });
+            });
+    </script>
+{% endblock %}

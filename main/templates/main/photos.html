@@ -1,0 +1,58 @@
+{% extends 'main/index.html' %}
+
+
+{% block content %}
+
+<div class="row">
+	{% if photos %}
+		{% for p in photos %}
+			<div class="col s12 m8 l6" style="width:75%">
+				<div class="card" >
+					<div class="card-image waves-effect">
+						<img class="activator" src="https://storage.cloud.google.com/hannibal-album-{{ c_user }}/{{ a_slug }}/{{ p.filename }}" style="text-align: center">
+					</div>
+					<div class="card-reveal" style="display: none; transform: translateY(100%)">
+						<span class="card-title activator grey-test test-darken-4"><i class="material-icons right">close</i>
+							<form method="POST" action="{% url 'main:delete_obj' p.pk c_album 2 %}">
+								{% csrf_token %}
+								<button type="submit" class="btn">Delete</button>
+							</form>
+						</span>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	{% endif %}
+	<div class="col s12 m8 l6" style="width:50%; height:fit-content ">
+		<div class="card">
+			<a class="btn-link" href="{% url 'main:upload_photo' a_slug %}">
+				<div class="card-image waves-effect" center>
+					<img class="activator" src="/media/images/album_cover_default.jpg" style="text-align: center">
+				</div>
+			</a>
+		</div>
+	</div>
+</div>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.fixed-action-btn');
+    var instances = M.FloatingActionButton.init(elems, {
+      direction: 'left',
+      hoverEnabled: true
+ 	  });
+  	});
+
+</script>
+
+<div class="fixed-action-btn">
+	<a class="btn-floating btn-large red">
+	  <i class="large material-icons">menu</i>
+	</a>
+	<ul>
+	  <li><a class="btn-floating red btn-link" href="/"><i class="material-icons">keyboard_backspace</i></a></li>
+	  <li><a class="btn-floating yellow darken-2" href="#top"><i class="large material-icons">keyboard_arrow_up</i></a></li>
+	  <li><a class="btn-floating blue btn-link" href="{% url 'main:upload_photo' a_slug %}"><i class="material-icons">file_upload</i></a></li>
+	</ul>
+</div>
+{% endblock %}

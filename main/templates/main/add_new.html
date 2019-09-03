@@ -1,0 +1,28 @@
+{% extends 'main/index.html' %}
+
+{% block content %}
+<h2>Create new album</h2>
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+{{ form.as_p }}
+<button type="submit">Create</button>
+</form>
+
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.fixed-action-btn');
+        var instances = M.FloatingActionButton.init(elems, {
+            direction: 'left',
+            hoverEnabled: false
+            });
+            });
+    
+    </script>
+    
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large red btn-link" href="/">
+            <i class="large material-icons">keyboard_backspace</i>
+        </a>
+    </div>
+
+{% endblock %}

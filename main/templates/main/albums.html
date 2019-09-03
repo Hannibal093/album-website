@@ -1,0 +1,80 @@
+{% extends 'main/index.html' %}
+
+{% block content %}
+<br>
+<br>
+{% if user.is_authenticated %}
+	<div class="row">
+		{% for ab, cd in collect %}
+		<div class="col s12 m8 l6">	
+			<div class="card sticky-action" style="overflow: visible">
+				<div class="card-image waves-effect waves-block waves-light">
+					<img class="activator" src="{{ cd }}">
+				</div>
+				<div class="card-content">
+					<span class="card-title" style="color:darkslategrey">{{ ab.title }}</span>
+				</div>
+				<div class="card-action">
+					<a href="{{ ab.slug }}">Explore</a>
+				</div>
+				<div class="card-reveal" style="display: none; transform: translateY(100%)">
+					<span class="card-title grey-test test-darken-4">
+						{{ ab.title }}
+						<i class="material_icons right">close</i>
+						<form method="POST" action="{% url 'main:delete_obj' ab.pk ab.pk 1 %}">
+							{% csrf_token %}
+							<button type="submit" class="btn">Delete</button>
+						</form>
+					</span>
+					<p>
+						{{ ab.summary }}
+					</p>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+		
+		<div class="col s12 m8 l6">
+			<div class="card">
+				<a class="btn-link" href="add_new/">
+					<div class="center">
+						<p class="card-content" style="font-stretch: expanded; font-size:xx-large">Add new album</p>
+					</div>
+				</a>
+			</div>
+		</div>
+
+		<script>
+			document.addEventListener('DOMContentLoaded', function() {
+			var elems = document.querySelectorAll('.fixed-action-btn');
+			var instances = M.FloatingActionButton.init(elems, {
+				direction: 'left',
+				hoverEnabled: false
+				});
+				});
+		
+		</script>
+		
+		<div class="fixed-action-btn">
+			<a class="btn-floating btn-large red">
+				<i class="large material-icons">menu</i>
+			</a>
+			<ul>
+				<li><a class="btn-floating yellow darken-2" href="#top"><i class="material-icons">keyboard_arrow_up</i></a></li>
+				<li><a class="btn-floating blue btn-link" href="add_new/"><i class="material-icons">add</i></a></li>
+			</ul>
+		</div>
+	</div>
+{% else %}
+    <div class="col s12 m8 l6">
+        <div class="card-content">
+            <div class="carousel carousel-slider">
+                <a class="carousel-item" href="#one!"><img src="https://lorempixel.com/800/400/food/1"></a>
+                <a class="carousel-item" href="#two!"><img src="https://lorempixel.com/800/400/food/2"></a>
+                <a class="carousel-item" href="#three!"><img src="https://lorempixel.com/800/400/food/3"></a>
+                <a class="carousel-item" href="#four!"><img src="https://lorempixel.com/800/400/food/4"></a>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
